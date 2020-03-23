@@ -22,6 +22,8 @@ const wss = new WebSocket.Server({ server });
 
 
 
+var dataToBeVisualized;
+
 wss.on('connection', function connection(ws) {
   ws.on('message', function incoming(message) {
     //console.log('received: %s', message);
@@ -30,8 +32,49 @@ wss.on('connection', function connection(ws) {
 });
 
 
-var dataToBeVisualized;
 
+wss.broadcast = (data) => {
+  wss.clients.forEach((client) => {
+    if (client.readyState === WebSocket.OPEN) {
+      try {
+        //console.log(`Broadcasting data ${data}`);
+        client.send(data);
+      } catch (e) {
+        console.error(e);
+      }
+    }
+  });
+};
+
+
+
+server.listen(process.env.PORT || '3000', () => {
+  console.log('Listening on %d.', server.address().port);
+});
+
+const eventHubReader = new EventHubReader(iotHubConnectionString, eventHubConsumerGroup);
+
+(async () => {
+  await eventHubReader.startReadMessage((message, date, deviceId) => {
+    try {
+
+      const payload = {
+        IotData: message,
+        MessageDate: date || Date.now().toISOString(),
+        DeviceId: deviceId,
+      };
+      writeData(payload);
+      wss.broadcast(JSON.stringify(payload));
+
+    } catch (err) {
+      console.error('Error broadcasting: [%s] from [%s].', err, message);
+    }
+  });
+})().catch();
+
+
+
+/******functions to handle the persistence */
 function isEmptyObject(obj) {
   return !Object.keys(obj).length;
 }
@@ -64,21 +107,7 @@ function emptyData() {
   fs.writeFileSync('temp.json', json);
 }
 
-
-
-
-wss.broadcast = (data) => {
-  wss.clients.forEach((client) => {
-    if (client.readyState === WebSocket.OPEN) {
-      try {
-        //console.log(`Broadcasting data ${data}`);
-        client.send(data);
-      } catch (e) {
-        console.error(e);
-      }
-    }
-  });
-};
+/************************************** */
 
 
 function supportBcast() {
@@ -90,54 +119,29 @@ function supportBcast() {
     };
   }
   else
-     table = JSON.parse(dataToBeVisualized);
+    table = JSON.parse(dataToBeVisualized);
   lastHourTable = {
     table: []
   };
   var now = new Date().getTime();
-  var isUpdateNecessary = false;
+
   table['table'].forEach(element => {
     if (element.MessageDate != undefined) {
       var time = new Date(element.MessageDate).getTime();
-      if ((now - time) < 3600000) {
-        isUpdateNecessary = true;
+      if ((now - time) < 3600000)
         lastHourTable.table.push(element);
-      }
     }
   });
-  if (isUpdateNecessary) {
-    emptyData();
-    fs.writeFileSync('temp.json', JSON.stringify(lastHourTable));
-    dataToBeVisualized = fs.readFileSync('temp.json', 'utf8');
-  }
+
+  emptyData();
+  fs.writeFileSync('temp.json', JSON.stringify(lastHourTable));
+  dataToBeVisualized = fs.readFileSync('temp.json', 'utf8');
+
   wss.broadcast(dataToBeVisualized);
   //console.log(wss.clients)
 }
 
-server.listen(process.env.PORT || '3000', () => {
-  console.log('Listening on %d.', server.address().port);
-  supportBcast()
-});
 
-const eventHubReader = new EventHubReader(iotHubConnectionString, eventHubConsumerGroup);
-
-(async () => {
-  await eventHubReader.startReadMessage((message, date, deviceId) => {
-    try {
-
-      const payload = {
-        IotData: message,
-        MessageDate: date || Date.now().toISOString(),
-        DeviceId: deviceId,
-      };
-      writeData(payload);
-      wss.broadcast(JSON.stringify(payload));
-
-    } catch (err) {
-      console.error('Error broadcasting: [%s] from [%s].', err, message);
-    }
-  });
-})().catch();
 
 refreshIntervalId = setInterval(supportBcast, 3000)
 //setInterval(emptyData, 3600000)
