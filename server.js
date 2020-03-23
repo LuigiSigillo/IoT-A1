@@ -89,8 +89,9 @@ function writeData(data) {
   else
     obj = JSON.parse(dataToBeVisualized);
   obj.table.push(data);
-  var json = JSON.stringify(obj);
-  fs.writeFileSync('temp.json', json);
+  var json_string = JSON.stringify(obj);
+  fs.writeFileSync('temp.json', json_string);
+  dataToBeVisualized = json_string;
 }
 
 function readData(filename) {
@@ -133,9 +134,9 @@ function supportBcast() {
     }
   });
 
-  emptyData();
+  //emptyData();
   fs.writeFileSync('temp.json', JSON.stringify(lastHourTable));
-  dataToBeVisualized = fs.readFileSync('temp.json', 'utf8');
+  dataToBeVisualized = JSON.stringify(lastHourTable);       //fs.readFileSync('temp.json', 'utf8');
 
   wss.broadcast(dataToBeVisualized);
   //console.log(wss.clients)
@@ -143,5 +144,5 @@ function supportBcast() {
 
 
 
-refreshIntervalId = setInterval(supportBcast, 3000)
+refreshIntervalId = setInterval(supportBcast, 5000)
 //setInterval(emptyData, 3600000)

@@ -19,13 +19,14 @@ class EventHubReader {
       this.eventHubClient = client;
 
       const partitionIds = await this.eventHubClient.getPartitionIds();
-      console.log('The partition ids are: ', partitionIds);
+      //console.log('The partition ids are: ', partitionIds);
 
       const onError = (err) => {
         console.error(err.message || err);
       };
 
       const onMessage = (message) => {
+        
         const deviceId = message.annotations['iothub-connection-device-id'];
         return startReadMessageCallback(message.body, message.enqueuedTimeUtc, deviceId);
       };
