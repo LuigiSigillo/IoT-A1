@@ -1,0 +1,104 @@
+<!doctype html>
+
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <script src="https://code.jquery.com/jquery-3.4.0.min.js"
+        integrity="sha256-BJeo0qm959uMBGb65z40ejJYGSgR7REI4+CW1fNKwOg=" crossorigin="anonymous" type=" text/javascript"
+        charset="utf-8"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0/dist/Chart.min.js" type="text/javascript"
+        charset="utf-8"></script>
+    <script src="js/chart-device-data.js" type="text/javascript" charset="utf-8"></script>
+    <link href="css/style.css" rel="stylesheet" />
+
+    <title>Real-time Data</title>
+</head>
+<script>
+
+</script>
+
+<body>
+
+    <div id="div1">
+        <ul>
+            <li class="square thing">
+                <h2>Latest data Device 1</h2>
+                <h3 id="temp1">Temperature: 0</h3>
+                <h3 id="hum1">Humidity: 0</h3>
+                <h3 id="windd1">Wind direction: 0</h3>
+                <h3 id="windi1">Wind intensity: 0</h3>
+                <h3 id="rain1">Rain height: 0</h3>
+            </li>
+        </ul>
+        <h2> Last hour data</h2>
+        <table id="Stats1" align="center">
+            <tr>
+                <td>DeviceID</td>
+                <td>Message Date</td>
+                <td>Humidity</td>
+                <td>Temperature</td>
+                <td>Wind direction</td>
+                <td>Wind intensity</td>
+                <td>Rain height</td>
+
+            </tr>
+        </table>
+        <div>
+            <div id="div2">
+                <ul>
+                    <li class="square thing">
+                        <h2>Latest data Device 2</h2>
+                        <h3 id="temp2">Temperature: 0</h3>
+                        <h3 id="hum2">Humidity: 0</h3>
+                        <h3 id="windd2">Wind direction: 0</h3>
+                        <h3 id="windi2">Wind intensity: 0</h3>
+                        <h3 id="rain2">Rain height: 0</h3>
+
+                    </li>
+                </ul>
+                <h2> Last hour data</h2>
+                <table id="Stats2" align="center">
+                    <tr>
+                        <td>DeviceID</td>
+                        <td>Message Date</td>
+                        <td>Humidity</td>
+                        <td>Temperature</td>
+                        <td>Wind direction</td>
+                        <td>Wind Intensity</td>
+                        <td>Rain height</td>
+                    </tr>
+                </table>
+            </div>
+
+            <h1 class="flexHeader">
+                <span>
+                    <span id="deviceCount">0 devices</span>
+                    <select id="listOfDevices" class="select_box"></select>
+                </span>
+                <span>Temperature & Humidity Real-time Data</span>
+            </h1>
+            <div>
+                <canvas id="iotChart"></canvas>
+            </div>
+
+</body>
+
+<style>
+    .square {
+        color: black;
+        border-style: solid;
+        border-width: 5px;
+        width: 400px;
+        height: 300px;
+        text-align: center;
+        margin: 5px;
+        list-style-type: none;
+        display: inline-block;
+    }
+</style>
+
+</html>
