@@ -8,8 +8,8 @@ var loaded = false
 
 const iotHubConnectionString = process.env.IotHubConnectionString;
 const eventHubConsumerGroup = process.env.EventHubConsumerGroup;
-/*const iotHubConnectionString = readData("properties.json").iotHubConnectionString;
-const eventHubConsumerGroup = "test";*/
+//const iotHubConnectionString = readData("properties.json").iotHubConnectionString;
+//const eventHubConsumerGroup = "test";
 // Redirect requests to the public subdirectory to the root
 const app = express();
 app.use(express.static(path.join(__dirname, 'public')));
@@ -30,15 +30,21 @@ wss.on('connection', function connection(ws) {
 });
 
 
+var dataToBeVisualized;
+
+function isEmptyObject(obj) {
+  return !Object.keys(obj).length;
+}
+
 
 function writeData(data) {
   var obj;
-  if (isEmptyObject(table))
+  if (isEmptyObject(dataToBeVisualized))
     obj = {
       table: []
     };
   else
-    obj = table;
+    obj = JSON.parse(dataToBeVisualized);
   obj.table.push(data);
   var json = JSON.stringify(obj);
   fs.writeFileSync('temp.json', json);
@@ -59,9 +65,7 @@ function emptyData() {
 }
 
 
-function isEmptyObject(obj) {
-  return !Object.keys(obj).length;
-}
+
 
 wss.broadcast = (data) => {
   wss.clients.forEach((client) => {
@@ -76,17 +80,17 @@ wss.broadcast = (data) => {
   });
 };
 
-var provaDati;
 
 function supportBcast() {
-  provaDati = fs.readFileSync('temp.json', 'utf8');
-  if (isEmptyObject(provaDati)) {
+  dataToBeVisualized = fs.readFileSync('temp.json', 'utf8');
+  var table;
+  if (isEmptyObject(dataToBeVisualized)) {
     table = {
       table: []
     };
   }
   else
-    table = JSON.parse(provaDati);
+     table = JSON.parse(dataToBeVisualized);
   lastHourTable = {
     table: []
   };
@@ -104,14 +108,15 @@ function supportBcast() {
   if (isUpdateNecessary) {
     emptyData();
     fs.writeFileSync('temp.json', JSON.stringify(lastHourTable));
-    provaDati = fs.readFileSync('temp.json', 'utf8');
+    dataToBeVisualized = fs.readFileSync('temp.json', 'utf8');
   }
-  wss.broadcast(provaDati);
+  wss.broadcast(dataToBeVisualized);
   //console.log(wss.clients)
 }
 
 server.listen(process.env.PORT || '3000', () => {
   console.log('Listening on %d.', server.address().port);
+  supportBcast()
 });
 
 const eventHubReader = new EventHubReader(iotHubConnectionString, eventHubConsumerGroup);

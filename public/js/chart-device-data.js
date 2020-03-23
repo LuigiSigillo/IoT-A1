@@ -136,50 +136,14 @@ $(document).ready(() => {
   listOfDevices.addEventListener('change', OnSelectionChange, false);
 
 
-  function row(id, date, iotData) {
-    arg = []
-    arg.push(iotData.humidity);
-    arg.push(iotData.temperature);
-    arg.push(iotData.wind_direction);
-    arg.push(iotData.wind_intensity);
-    arg.push(iotData.rain_height);
-    console.log(iotData);
-    var index = id.substr(id.length - 1);
-    if (index == "e")
-      index = 1;
-    var myTable = document.getElementById("Stats" + index);
-    // insert new row. 
-    var newRow = myTable.insertRow(1);
-    newRow.insertCell(0).innerHTML = id;
-    newRow.insertCell(1).innerHTML = date;
-    for (var i = 0; i < 5; i++) {
-      newRow.insertCell(i + 2).innerHTML = arg[i].toFixed(2);
-    }
-
-  }
-
-  function updateLatestValue(index,messageData) {
-    if (index == "e")
-      index = 1;
-
-    document.getElementById("temp" + index).innerHTML = "Temperature:" + messageData.IotData.temperature.toFixed(2) + " ºC";
-    document.getElementById("hum" + index).innerHTML = "Humidity:" + messageData.IotData.humidity.toFixed(2) + "%";
-    document.getElementById("windd" + index).innerHTML = "Wind direction:" + messageData.IotData.wind_direction.toFixed(2) + " degrees";
-    document.getElementById("windi" + index).innerHTML = "Wind intensity:" + messageData.IotData.wind_intensity.toFixed(2) + " m/s";
-    document.getElementById("rain" + index).innerHTML = "Rain height:" + messageData.IotData.rain_height.toFixed(2) + " mm/h";
-  }
-
   // 3. Find or create a cached device to hold the telemetry data
   // 4. Append the telemetry data
   // 5. Update the chart UI
   function findOrCreateData(messageData) {
     // find or add device to list of tracked devices
     const existingDeviceData = trackedDevices.findDevice(messageData.DeviceId);
-    var index = messageData.DeviceId.substr(messageData.DeviceId.length - 1);
     if (existingDeviceData) {
       existingDeviceData.addData(messageData.MessageDate, messageData.IotData.temperature, messageData.IotData.humidity);
-      row(messageData.DeviceId, messageData.MessageDate, messageData.IotData);
-      updateLatestValue(index,messageData);
     }
     else {
       const newDeviceData = new DeviceData(messageData.DeviceId);
@@ -187,8 +151,6 @@ $(document).ready(() => {
       const numDevices = trackedDevices.getDevicesCount();
       deviceCount.innerText = numDevices === 1 ? `${numDevices} device` : `${numDevices} devices`;
       newDeviceData.addData(messageData.MessageDate, messageData.IotData.temperature, messageData.IotData.humidity);
-      row(messageData.DeviceId, messageData.MessageDate, messageData.IotData);
-      updateLatestValue(index,messageData);
       // add device to the UI list
       const node = document.createElement('option');
       const nodeText = document.createTextNode(messageData.DeviceId);
@@ -219,7 +181,7 @@ $(document).ready(() => {
         if (!messageData.MessageDate || (!messageData.IotData.temperature && !messageData.IotData.humidity)) {
           return;
         }
-        findOrCreateData(messageData)
+        findOrCreateData(messageData);
       }
       else {
         if (!received) {
@@ -235,27 +197,10 @@ $(document).ready(() => {
         }
         else
           webSocket.send('hello from the client! dall else');
-
       }
     } catch (err) {
       console.error(err);
     }
   };
-  /*
-    setInterval(function () {
-      reload(trackedDevices)
-      $("div1").load(window.location.href + "div1");
-      console.log("funzina?")
-  }, 2000);
-  */
 
 });
-
-
-
-function reload(dev) {
-  console.log(typeof (dev))
-  dev.forEach(element => {
-    findOrCreateData(element)
-  });
-}
