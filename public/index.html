@@ -23,11 +23,11 @@
 </script>
 
 <body>
-    <h1>Dashboard</h1>
+    <h1>Device 1</h1>
     <div id="div1">
         <ul>
             <li class="square thing">
-                <h2>Latest data Device 1</h2>
+                <h2>Latest data</h2>
                 <h3 id="temp1">Temperature: 0</h3>
                 <h3 id="hum1">Humidity: 0</h3>
                 <h3 id="windd1">Wind direction: 0</h3>
@@ -48,11 +48,12 @@
 
             </tr>
         </table>
+        <h1>Device 2</h1>
         <div>
             <div id="div2">
                 <ul>
                     <li class="square thing">
-                        <h2>Latest data Device 2</h2>
+                        <h2>Latest data</h2>
                         <h3 id="temp2">Temperature: 0</h3>
                         <h3 id="hum2">Humidity: 0</h3>
                         <h3 id="windd2">Wind direction: 0</h3>
@@ -74,7 +75,60 @@
                     </tr>
                 </table>
             </div>
+            <h2>Sensors last hour data</h2>
+            <div class="card">
+                <h3>Humidity</h3> <br>
+                <table id="humHistory" align="center">
+                    <tr>
+                        <td>DeviceID</td>
+                        <td>Message Date</td>
+                        <td>Humidity</td>
+                    </tr>
+                </table>
+            </div>
 
+            <div class="card card-1">
+                <h3>Temperature </h3><br>
+                <table id="tempHistory" align="center">
+                    <tr>
+                        <td>DeviceID</td>
+                        <td>Message Date</td>
+                        <td>Temperature</td>
+                    </tr>
+                </table>
+            </div>
+            <div class="card card-2">
+                <h3>Wind direction</h3> <br>
+                <table id="windDHistory" align="center">
+                    <tr>
+                        <td>DeviceID</td>
+                        <td>Message Date</td>
+                        <td>Wind direction</td>
+                    </tr>
+                </table>
+            </div>
+            <div class="card card-3">
+                <h3>Wind intensity</h3> <br>
+                <table id="windIHistory" align="center">
+                    <tr>
+                        <td>DeviceID</td>
+                        <td>Message Date</td>
+                        <td>Wind intensity</td>
+                    </tr>
+                </table>
+            </div>
+            <div class="card card-4">
+                <h3>Rain height</h3> <br>
+                <table id="rainHistory" align="center">
+                    <tr>
+                        <td>DeviceID</td>
+                        <td>Message Date</td>
+                        <td>Rain height</td>
+                    </tr>
+                </table>
+            </div>
+
+<!--
             <h1 class="flexHeader">
                 <span>
                     <span id="deviceCount">0 devices</span>
@@ -85,7 +139,7 @@
             <div>
                 <canvas id="iotChart"></canvas>
             </div>
-
+-->
 </body>
 
 <style>
@@ -99,6 +153,42 @@
         margin: 5px;
         list-style-type: none;
         display: inline-block;
+    }
+
+    body {
+        background: #e2e1e0;
+        text-align: center;
+    }
+
+    .card {
+        background: #fff;
+        border-radius: 2px;
+        display: inline-block;
+        height: 300px;
+        margin: 1rem;
+        position: relative;
+        width: 325px;
+    }
+
+    .card-1 {
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+        transition: all 0.3s cubic-bezier(.25, .8, .25, 1);
+    }
+
+    .card-1:hover {
+        box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+    }
+
+    .card-2 {
+        box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+    }
+
+    .card-3 {
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+    }
+
+    .card-4 {
+        box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
     }
 </style>
 
