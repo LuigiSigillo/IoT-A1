@@ -4,7 +4,7 @@ This project is focused on the development of an IoT scenario using Azure.
 In this repository there is the code of the web app.
 To group together also the part of the device virtualization i put inside the simulateDevice folder the script of the virtual device, written in Python.
 
-To know how to use it, look at the [blog-post](https://www.linkedin.com/posts/luigi-sigillo-6a2492158_activity-6648264350618435584-ETkC) on Linkedin.
+To know how to use it, look at the [blog-post](https://www.linkedin.com/pulse/hands-on-guide-data-visualization-virtualized-iot-devices-sigillo/) on Linkedin.
 
 To see a brief demonstration see [this](https://www.youtube.com/watch?v=IlIVno4TFOA) youtube video.
 
