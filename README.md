@@ -1,5 +1,5 @@
 ## Iot first assignement
-![Scenario](https://imgur.com/a/N5dMTIs)
+![Scenario](https://i.imgur.com/uK8sw4W.jpg)
 This project is focused on the development of an IoT scenario using Azure.
 This is the code of the web application.
 Inside the simulateDevice folder there is also the script of the virtual device, written in Python.
