@@ -76,7 +76,9 @@ const eventHubReader = new EventHubReader(iotHubConnectionString, eventHubConsum
 
 /******functions to handle the persistence */
 function isEmptyObject(obj) {
-  return !Object.keys(obj).length;
+    if(obj!=undefined || obj!=null)
+      return !Object.keys(obj).length;
+    return true
 }
 
 

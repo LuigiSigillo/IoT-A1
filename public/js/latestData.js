@@ -43,7 +43,7 @@ $(document).ready(() => {
     });
     var n = $(".card").css("height");
     x = Number(n.substring(0,3))
-    $('.card').css("height" , x+14+"px");
+    $('.card').css("height" , x+25+"px");
   }
 
 

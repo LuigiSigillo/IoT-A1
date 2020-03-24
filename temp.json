@@ -1,1 +1,48 @@
-{"table":[{"IotData":{"temperature":13.97,"humidity":67.43,"wind_direction":64.2,"wind_intensity":57.85,"rain_height":30.88},"MessageDate":"2020-03-24T10:19:54.160Z","DeviceId":"MyPythonDevice"},{"IotData":{"temperature":17.05,"humidity":55.8,"wind_direction":50.18,"wind_intensity":57.46,"rain_height":31.6},"MessageDate":"2020-03-24T10:20:32.618Z","DeviceId":"MyPythonDevice"},{"IotData":{"temperature":24.73,"humidity":60.88,"wind_direction":51.31,"wind_intensity":53.31,"rain_height":31.36},"MessageDate":"2020-03-24T10:22:24.641Z","DeviceId":"MyPythonDevice2"},{"IotData":{"temperature":10.19,"humidity":55.32,"wind_direction":63.01,"wind_intensity":62.63,"rain_height":30.740000000000002},"MessageDate":"2020-03-24T10:22:27.719Z","DeviceId":"MyPythonDevice2"},{"IotData":{"temperature":13.47,"humidity":55.01,"wind_direction":52.72,"wind_intensity":64.78999999999999,"rain_height":32.24},"MessageDate":"2020-03-24T10:22:30.787Z","DeviceId":"MyPythonDevice2"},{"IotData":{"temperature":20.68,"humidity":66.78999999999999,"wind_direction":54.67,"wind_intensity":66.69,"rain_height":32.519999999999996},"MessageDate":"2020-03-24T10:22:33.834Z","DeviceId":"MyPythonDevice2"},{"IotData":{"temperature":12.9,"humidity":55.18,"wind_direction":52.3,"wind_intensity":61.61,"rain_height":36.15},"MessageDate":"2020-03-24T10:22:36.898Z","DeviceId":"MyPythonDevice2"}]}
+{
+    "table": [
+        {
+            "IotData": {
+                "temperature": 11.59,
+                "humidity": 57.93,
+                "wind_direction": 53.42,
+                "wind_intensity": 55.55,
+                "rain_height": 27.490000000000002
+            },
+            "MessageDate": "2020-03-24T14:04:49.777Z",
+            "DeviceId": "MyPythonDevice2"
+        },
+        {
+            "IotData": {
+                "temperature": 13.45,
+                "humidity": 61.99,
+                "wind_direction": 55.65,
+                "wind_intensity": 55.81,
+                "rain_height": 29.57
+            },
+            "MessageDate": "2020-03-24T14:04:52.856Z",
+            "DeviceId": "MyPythonDevice2"
+        },
+        {
+            "IotData": {
+                "temperature": 19.560000000000002,
+                "humidity": 68.77,
+                "wind_direction": 61.14,
+                "wind_intensity": 68.84,
+                "rain_height": 26.23
+            },
+            "MessageDate": "2020-03-24T14:05:58.613Z",
+            "DeviceId": "MyPythonDevice"
+        },
+        {
+            "IotData": {
+                "temperature": 10.27,
+                "humidity": 52.29,
+                "wind_direction": 62.36,
+                "wind_intensity": 68.88,
+                "rain_height": 37.69
+            },
+            "MessageDate": "2020-03-24T14:06:01.684Z",
+            "DeviceId": "MyPythonDevice"
+        }
+    ]
+}
