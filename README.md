@@ -9,7 +9,7 @@ To group together also the part of the device virtualization I put inside the si
 
 To know how to use it, look at the [blog-post](https://www.linkedin.com/pulse/hands-on-guide-data-visualization-virtualized-iot-devices-sigillo/) on Linkedin.
 
-To see a brief demonstration see [this](https://www.youtube.com/watch?v=IlIVno4TFOA) youtube video.
+To see a brief demonstration see [this](https://youtu.be/eh-pfFC6mXE) youtube video.
 
 The website is currently active, you can reach it using this [link](https://testiotwebapp2020.azurewebsites.net/).
 
