@@ -41,3 +41,10 @@ jspm_packages
 **/.vscode/*
 
 properties.json
+*.o
+*.d
+*.a
+*.elf
+*.map
+*.h.in
+*.h

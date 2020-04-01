@@ -13,11 +13,9 @@ $(document).ready(() => {
     arg.push(iotData.wind_direction);
     arg.push(iotData.wind_intensity);
     arg.push(iotData.rain_height);
-    console.log(iotData);
     var index = id.substr(id.length - 1);
     if (index == "e")
       index = 1;
-
     // update last hour of device
     var myTable = document.getElementById("Stats" + index);
     // insert new row. 
@@ -25,8 +23,14 @@ $(document).ready(() => {
     newRow.insertCell(0).innerHTML = id;
     newRow.insertCell(1).innerHTML = date;
     for (var i = 0; i < 5; i++) {
-      newRow.insertCell(i + 2).innerHTML = arg[i].toFixed(2);
-    }
+      try {
+        arg[i].toFixed(2);
+        newRow.insertCell(i + 2).innerHTML = arg[i].toFixed(2);
+      }
+      catch (err) {
+        newRow.insertCell(i + 2).innerHTML = arg[i];
+      }
+  }
 
 
     // update last hour of sensor
@@ -38,7 +42,13 @@ $(document).ready(() => {
       var newRow = myTable.insertRow(1);
       newRow.insertCell(0).innerHTML = id;
       newRow.insertCell(1).innerHTML = date;
+      try {
+        arg[i].toFixed(2);
       newRow.insertCell(2).innerHTML = arg[i].toFixed(2);
+      }
+      catch (err) {
+        newRow.insertCell(2).innerHTML = arg[i];  
+      }
       i++;
     });
     var n = $(".card").css("height");
@@ -51,18 +61,27 @@ $(document).ready(() => {
   function updateLatestValue(index, messageData) {
     if (index == "e")
       index = 1;
-
+    try {
     document.getElementById("temp" + index).innerHTML = "Temperature:" + messageData.IotData.temperature.toFixed(2) + " ºC";
     document.getElementById("hum" + index).innerHTML = "Humidity:" + messageData.IotData.humidity.toFixed(2) + "%";
     document.getElementById("windd" + index).innerHTML = "Wind direction:" + messageData.IotData.wind_direction.toFixed(2) + " degrees";
     document.getElementById("windi" + index).innerHTML = "Wind intensity:" + messageData.IotData.wind_intensity.toFixed(2) + " m/s";
     document.getElementById("rain" + index).innerHTML = "Rain height:" + messageData.IotData.rain_height.toFixed(2) + " mm/h";
   }
-
+  catch (err) {
+    {
+      document.getElementById("temp" + index).innerHTML = "Temperature:" + messageData.IotData.temperature + " ºC";
+      document.getElementById("hum" + index).innerHTML = "Humidity:" + messageData.IotData.humidity + "%";
+      document.getElementById("windd" + index).innerHTML = "Wind direction:" + messageData.IotData.wind_direction + " degrees";
+      document.getElementById("windi" + index).innerHTML = "Wind intensity:" + messageData.IotData.wind_intensity + " m/s";
+      document.getElementById("rain" + index).innerHTML = "Rain height:" + messageData.IotData.rain_height + " mm/h";
+    }
+  }
+  }
   // Find or create a cached device to hold the telemetry data
   function findOrCreateData(messageData) {
-    var index = messageData.DeviceId.substr(messageData.DeviceId.length - 1);
-    row(messageData.DeviceId, messageData.MessageDate, messageData.IotData);
+    var index = messageData.IotData.device_id.substr(messageData.IotData.device_id.length - 1);
+    row(messageData.IotData.device_id, messageData.MessageDate, messageData.IotData);
     updateLatestValue(index, messageData);
 
   }
