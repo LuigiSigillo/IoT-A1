@@ -30,7 +30,7 @@ This third part is focused on the development of an IoT scenario using the LoRaW
 
 I put inside the lorawan folder the main.c of the RIOT-OS system and the code of the bridge from TTN to the Azure IoT Hub.
  
-For more information on how to use it properly look at my [blog-post](https://www.linkedin.com/pulse/hands-on-guide-riot-os-weather-stations-sending-data-via-sigillo/) on Linkedin.
+For more information on how to use it properly look at my [blog-post](https://www.linkedin.com/pulse/hands-on-guide-3-riot-os-weather-stations-sending-data-luigi-sigillo) on Linkedin.
 
 To see a brief demonstration check [this](https://youtu.be/XWdK8wb6FHY) youtube video.
 
