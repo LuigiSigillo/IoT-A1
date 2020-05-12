@@ -1,0 +1,19 @@
+{
+    "name": "webappaccmeter",
+    "description": "Web app sending accelerometer telemetry data ",
+    "version": "0.0.1",
+    "private": true,
+    "license": "None",
+    "author": "Nictus",
+    "scripts": {
+        "start": "node index.js"
+    },
+    "dependencies": {
+        "azure-iot-device-mqtt": "^1.14.0",
+        "express": "^4.17.1",
+        "nodemon": "^2.0.3",
+        "socket.io": "^2.3.0",
+        "tedious": "^8.3.0"
+    },
+    "devDependencies": {}
+}
