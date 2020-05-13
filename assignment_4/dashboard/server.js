@@ -1,60 +1,50 @@
 const express = require('express')
 const DBHandler = require("./db/dbhandler.js")
-const WebSocket = require('ws');
-const path = require('path');
-const http = require('http');
+const socket = require('socket.io');
+const bodyParser = require('body-parser');
+
 
 // Redirect requests to the public subdirectory to the root
 const app = express();
-app.use(express.static(path.join(__dirname, 'public')));
-app.use((req, res /* , next */) => {
-  res.redirect('/');
+app.use(express.static('public'));
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+
+
+var server = app.listen(process.env.PORT || '3000', () => {
+    console.log('Listening on %d.', server.address().port);
 });
 
-const server = http.createServer(app);
-const wss = new WebSocket.Server({ server });
-const dbHandler = new DBHandler();
+var dbHandler = new DBHandler()
 
-server.listen(process.env.PORT || '3000', () => {
-    console.log('Listening on %d.', server.address().port);
-  });
-
-//dbHandler.queryDatabase("SELECT * FROM [dbo].[Accelerometer] WHERE DateOfArrival > DATEADD(HOUR, -1, GETDATE())");
+var io = socket(server)
 
 
-wss.broadcast = (data) => {
-    wss.clients.forEach((client) => {
-        console.log("broadcast??")
-        if (client.readyState === WebSocket.OPEN) {
-            try {
-                console.log(`Broadcasting data ${data}`);
-                client.send(data);
-            } catch (e) {
-                console.error(e);
-            }
-        }
-    });
-};
+io.on('connection', function (socket) {
+    console.log('made socket connection');
+    var lastEdge = 0;
+    var lastCloud = 0;
+    var refreshIntervalId = setInterval(function () {
+        dbHandler.read("SELECT * FROM [dbo].[Accelerometer] WHERE DateOfArrival > DATEADD(HOUR, -1, GETDATE())", socket, true);
+        dbHandler.read("SELECT * FROM [dbo].[EdgeComputingAcceloremeter] WHERE DateOfArrival > DATEADD(HOUR, -1, GETDATE())", socket, false); // WHERE DateOfArrival > DATEADD(HOUR, -1, GETDATE())
+    }, 5000);
 
-function retrieveData() {
-    var data = {
-        Id: 22,
-        x: 3,
-        y: 2,
-        z: 1,
-        IsMoving: false,
-        DateOfArrival: "2020-05-12T16:41:50.280Z"
-      }
-    try {
-        const payload = {
-            AccData: data,
-            MessageDate: data.DateOfArrival || Date.now().toISOString()
-        };
-        wss.broadcast(JSON.stringify(payload));
-        
-    } catch (err) {
-        console.error('Error broadcasting: [%s] from [%s].', err, message);
-    }
-}
+    var refreshIntervalId2 = setInterval(function () {
+        if (lastEdge > 0)
+            dbHandler.read("SELECT * FROM [dbo].[Accelerometer] WHERE DateOfArrival > DATEADD(HOUR, -1, GETDATE()) AND Id>" + lastCloud, socket, true);
+        if (lastCloud > 0)
+            dbHandler.read("SELECT * FROM [dbo].[EdgeComputingAcceloremeter] WHERE DateOfArrival > DATEADD(HOUR, -1, GETDATE()) AND Id>" + lastEdge, socket, false); // WHERE DateOfArrival > DATEADD(HOUR, -1, GETDATE())
+    }, 10000);
 
-retrieveData()
+    socket.on("last id", function (data) {
+        if ("stopEdge" in data)
+            lastEdge = data.stop;
+        else
+            lastCloud = data.stop;
+    })
+
+});
+
+
+
+//retrieveData()

@@ -6,12 +6,10 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
-    <script src="https://code.jquery.com/jquery-3.4.0.min.js"
-        integrity="sha256-BJeo0qm959uMBGb65z40ejJYGSgR7REI4+CW1fNKwOg=" crossorigin="anonymous" type=" text/javascript"
-        charset="utf-8"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.js"></script>
     <script src="js/latestData.js" type="text/javascript" charset="utf-8"></script>
     <link href="style/index.css" rel="stylesheet" />
+
 
     <title>Real-time Data</title>
 </head>
@@ -20,7 +18,7 @@
 </script>
 
 <body>
-    <h1></h1>
+    <h1> Cloud computed</h1>
     <div id="div1">
         <ul>
             <li class="square thing">
@@ -46,7 +44,23 @@
         </table>
     </div>
          
-       
+    <h1> Edge computed</h1>
+    <div id="div2">
+        <ul>
+            <li class="square thing">
+                <h2>Latest data</h2>
+                <h3 id="ismoving2">Is standing still </h3>
+                <h3 id="timestamp2">Timestamp:</h3>
+            </li>
+        </ul>
+        <h2> Last hour data</h2>
+        <table id="Stats2" align="center">
+            <tr>
+                <td>Timestamp</td>
+                <td>Is moving?</td>
+            </tr>
+        </table>
+    </div> 
 
 
 

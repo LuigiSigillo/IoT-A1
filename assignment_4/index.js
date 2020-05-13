@@ -36,7 +36,6 @@ io.on('connection', function(socket){
     console.log('made socket connection');
 
     socket.on('accelerometer', function(data){
-        console.log(data);
         var message = new Message(JSON.stringify({data}));
         console.log('Sending message: ' + message.getData());
 
