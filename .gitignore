@@ -185,3 +185,4 @@ obj
 appsettings.json
 local.settings.json
 .python_packages
+lorawan/README.md
