@@ -24,15 +24,19 @@ io.on('connection', function (socket) {
     console.log('made socket connection');
     var lastEdge = 0;
     var lastCloud = 0;
+
+    // update the first values retrived by DBs
     var refreshIntervalId = setInterval(function () {
-        dbHandler.read("SELECT * FROM [dbo].[Accelerometer] WHERE DateOfArrival > DATEADD(HOUR, -1, GETDATE())", socket, true);
+        //dbHandler.read("SELECT * FROM [dbo].[Accelerometer] WHERE DateOfArrival > DATEADD(HOUR, -1, GETDATE())", socket, true);
         dbHandler.read("SELECT * FROM [dbo].[EdgeComputingAcceloremeter] WHERE DateOfArrival > DATEADD(HOUR, -1, GETDATE())", socket, false); // WHERE DateOfArrival > DATEADD(HOUR, -1, GETDATE())
     }, 5000);
 
+
+    // Updates in real time
     var refreshIntervalId2 = setInterval(function () {
-        if (lastEdge > 0)
+        if (lastCloud >= 0)
             dbHandler.read("SELECT * FROM [dbo].[Accelerometer] WHERE DateOfArrival > DATEADD(HOUR, -1, GETDATE()) AND Id>" + lastCloud, socket, true);
-        if (lastCloud > 0)
+        if (lastEdge >= 0)
             dbHandler.read("SELECT * FROM [dbo].[EdgeComputingAcceloremeter] WHERE DateOfArrival > DATEADD(HOUR, -1, GETDATE()) AND Id>" + lastEdge, socket, false); // WHERE DateOfArrival > DATEADD(HOUR, -1, GETDATE())
     }, 10000);
 

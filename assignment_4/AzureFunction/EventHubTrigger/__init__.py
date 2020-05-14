@@ -4,6 +4,10 @@ import datetime
 import azure.functions as func
 import math
 import json 
+import os
+
+
+
 
 def main(event: func.EventHubEvent):
     logging.info('Python EventHub trigger processed an event: %s', event.get_body().decode('utf-8'))
@@ -24,11 +28,12 @@ def calculate_acc(x,y,z):
     return math.sqrt(x * x + y * y + z * z)
 
 def is_moving(last, current):
-    mAccel = 0
+    mAccel = float(os.environ.get("mAccel"))
     mAccelLast = calculate_acc(last["x"], last["y"], last["z"])
     mAccelCurrent = calculate_acc(current["x"], current["y"], current["z"])
     delta = mAccelCurrent - mAccelLast
     mAccel = mAccel * 0.9 + delta
+    os.environ['mAccel'] = str(mAccel)
     if (mAccel > 2):
         return 1
     else:
@@ -38,7 +43,7 @@ def connect_to_db():
     server = 'webappacc.database.windows.net'
     database = 'webapp'
     username = 'luigi'
-    password = ''
+    password = os.environ.get('dbPWD')
     driver= '{ODBC Driver 17 for SQL Server}'
     logging.info("tryng to coonnect")
     cnxn = pyodbc.connect('DRIVER='+driver+';SERVER='+server+';DATABASE='+database+';UID='+username+';PWD='+ password)

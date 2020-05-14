@@ -18,51 +18,55 @@
 </script>
 
 <body>
-    <h1> Cloud computed</h1>
-    <div id="div1">
-        <ul>
-            <li class="square thing">
-                <h2>Latest data</h2>
-                <h3 id="x1">x: 0</h3>
-                <h3 id="y1">y: 0</h3>
-                <h3 id="z1">z: 0</h3>
-                <h3 id="ismoving1">Is standing still </h3>
-                <h3 id="timestamp1">Timestamp:</h3>
-            </li>
-        </ul>
-        <h2> Last hour data</h2>
-        <table id="Stats1" align="center">
-            <tr>
-                
-                <td>Timestamp</td>
-                <td>x</td>
-                <td>y</td>
-                <td>z</td>
-                <td>Is moving?</td>
+    <div class="container">
 
-            </tr>
-        </table>
+        <div id="div1" class="left">
+            <h1> Cloud computed</h1>
+            <ul>
+                <li class="square thing">
+                    <h2 style="color: green; font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif">Latest data
+                    </h2>
+                    <h3 id="x1">x: 0</h3>
+                    <h3 id="y1">y: 0</h3>
+                    <h3 id="z1">z: 0</h3>
+                    <h3 id="ismoving1">Is standing still </h3>
+                    <h3 id="timestamp1">Timestamp:</h3>
+                </li>
+            </ul>
+            <h2 style="color: green; font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif"> Last hour data</h2>
+            <table id="Stats1" align="center">
+                <tr>
+
+                    <td>Timestamp</td>
+                    <td>x</td>
+                    <td>y</td>
+                    <td>z</td>
+                    <td>Is moving?</td>
+
+                </tr>
+            </table>
+        </div>
+
+        <div id="div2" class="right">
+            <h1> Edge computed</h1>
+            <ul>
+                <li class="square thing">
+                    <h2 style="color: green; font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif">Latest data
+                    </h2>
+                    <h3 id="ismoving2">Is standing still </h3>
+                    <h3 id="timestamp2">Timestamp:</h3>
+                </li>
+            </ul>
+            <h2 style="color: green; font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif"> Last hour data</h2>
+            <table id="Stats2" align="center">
+                <tr>
+                    <td>Timestamp</td>
+                    <td>Is moving?</td>
+                </tr>
+            </table>
+        </div>
+
     </div>
-         
-    <h1> Edge computed</h1>
-    <div id="div2">
-        <ul>
-            <li class="square thing">
-                <h2>Latest data</h2>
-                <h3 id="ismoving2">Is standing still </h3>
-                <h3 id="timestamp2">Timestamp:</h3>
-            </li>
-        </ul>
-        <h2> Last hour data</h2>
-        <table id="Stats2" align="center">
-            <tr>
-                <td>Timestamp</td>
-                <td>Is moving?</td>
-            </tr>
-        </table>
-    </div> 
-
-
 
 </body>
 
@@ -70,7 +74,7 @@
     .square {
         color: black;
         border-style: solid;
-        border-width: 5px;
+        border-width: 3px;
         width: 400px;
         height: 300px;
         text-align: center;
@@ -84,7 +88,19 @@
         text-align: center;
     }
 
-  
+    div.container {
+        display: flex;
+    }
+
+    .container div {
+        margin: 1em;
+    }
+
+    @media screen and (max-width: 480px) {
+        div.container {
+            flex-direction: column;
+        }
+    }
 </style>
 
 </html>

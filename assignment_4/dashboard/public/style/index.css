@@ -1,16 +1,11 @@
 table, 
         td { 
-            border: 1px solid green; 
+            border: 1px solid black; 
         } 
           
         h1 { 
             color: green; 
         } 
-          
-        h2 { 
-            font-family: Impact; 
-        } 
-          
         body { 
             text-align: center; 
         } 

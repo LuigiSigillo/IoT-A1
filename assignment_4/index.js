@@ -19,7 +19,7 @@ var httpsOptions = {
 app.use(express.static('public'));
 
 //IoT hub Connection
-var connectionString = "";
+const connectionString = readData("properties.json").iotHubConnectionString;
 var client = DeviceClient.fromConnectionString(connectionString, Mqtt);
 
 // //create a server
@@ -49,3 +49,10 @@ io.on('connection', function(socket){
     });
     })
 });
+
+function readData(filename) {
+    data = fs.readFileSync(filename, 'utf8');
+    obj = JSON.parse(data); //now it an object
+    return obj;
+  }
+  
