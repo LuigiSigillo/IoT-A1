@@ -18,7 +18,7 @@ function edgeCompute(x, y, z) {
         socket.emit('accelerometer', { "type": "edge", "ismoving": true })
     }
     else {
-        movement.innerHTML = 'You are still';
+        movement.innerHTML = 'You are standing still!';
         socket.emit('accelerometer', { "type": "edge", "ismoving": false })
     }
 }
