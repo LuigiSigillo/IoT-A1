@@ -14,7 +14,7 @@
     "socket.io": "^2.3.0",
     "socket.io-client": "^2.3.0",
     "tedious": "^8.3.0",
-    "ws": "^7.3.0"
+    "ws": "^7.4.6"
   },
   "main": "server.js",
   "devDependencies": {},
